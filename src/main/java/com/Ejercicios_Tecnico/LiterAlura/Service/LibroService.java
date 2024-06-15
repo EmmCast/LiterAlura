@@ -21,12 +21,8 @@ public class LibroService {
 
 
     public Libro buscarLibroPorTitulo(String titulo) {
-        // Buscar en la base de datos local
-        List<Libro> libros = (List<Libro>) libroRepository.findByTitulo(titulo);
-        if (libros.isEmpty()) {
-            throw new RuntimeException("Libro no encontrado en la base de datos local");
-        }
-        return libros.get(0);
+        return libroRepository.findByTitulo(titulo)
+                .orElseThrow(() -> new RuntimeException("Libro no encontrado: " + titulo));
     }
 
     public List<Libro> obtenerTodosLosLibros() {
